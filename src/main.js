@@ -1,4 +1,5 @@
 const app = require('./app/index');
+require('./app/database');
 
 const config = require('./app/config');
 
