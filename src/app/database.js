@@ -2,7 +2,7 @@ const mysql = require('mysql2');
 
 const config = require('./config');
 
-const conn = mysql.createConnection({
+const pool = mysql.createPool({
     host: config.MYSQL_HOST,
     port: config.MYSQL_PORT,
     database: config.MYSQL_DATABASE,
@@ -11,11 +11,15 @@ const conn = mysql.createConnection({
     charset:config.MYSQL_CHARSET
 });
 
-conn.query(
-    'SELECT * FROM `user`',
-    function(err, results, fields) {
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
+pool.getConnection((err, conn) => {
+  conn.connect((err) => {
+    if (err) {
+      console.log('数据库连接失败:', err);
+    } else {
+      console.log('数据库连接成功');
     }
-  );
+  });
+});
+
+module.exports = pool.promise();
 
