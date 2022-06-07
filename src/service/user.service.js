@@ -1,4 +1,6 @@
 const connection = require('../app/database');
+
+// 操作数据库的service
 class UserService {
     async create(user) {
         const {name, password} = user;

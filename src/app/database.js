@@ -11,6 +11,7 @@ const pool = mysql.createPool({
     charset:config.MYSQL_CHARSET
 });
 
+// 创建数据库连接
 pool.getConnection((err, conn) => {
   conn.connect((err) => {
     if (err) {
