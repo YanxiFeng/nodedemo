@@ -16,7 +16,7 @@ class UserController {
 
     // 获取用户信息
     async getDiner(ctx, next) {
-        ctx.response.body = "<h1>Hello World!</h1>"
+        ctx.response.body = "<h1>用户页面!</h1>"
     }
 }
 
