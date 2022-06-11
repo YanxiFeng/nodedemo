@@ -2,6 +2,7 @@ const mysql = require('mysql2');
 
 const config = require('./config');
 
+// 创建数据库连接池
 const pool = mysql.createPool({
     host: config.MYSQL_HOST,
     port: config.MYSQL_PORT,
@@ -11,7 +12,7 @@ const pool = mysql.createPool({
     charset:config.MYSQL_CHARSET
 });
 
-// 创建数据库连接
+// 数据库连接
 pool.getConnection((err, conn) => {
   conn.connect((err) => {
     if (err) {

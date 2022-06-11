@@ -1,27 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node.js的一个demo</title>
     <style>
+        .container {
+            display: flex;
+        }
+
+        .item1 {
+            background-color: bisque;
+        }
+
+        .item2 {
+            background-color: cadetblue;
+        }
+
         .box {
             width: 200px;
             height: 200px;
-            background-color: aquamarine;
         }
+
         .btn {
             width: 50px;
             height: 30px;
-            background-color: coral;
+            color: white;
+            background-color: black;
         }
     </style>
 </head>
+
 <body>
-    <h1>Demo</h1>
-    <p class="box">写点内容</p>
-    <button class="btn">注册</button>
-    <button class="btn">登录</button>
+    <div class="container">
+        <div class="item1">
+            <h1>写入数据</h1>
+            <form>
+                账号: <input id="username" type="text" name="username"><br>
+                密码: <input id="password" type="password" name="password"><br>
+            </form>
+            <p id="msg"></p>
+            <button id="register" class="btn">注册</button>
+        </div>
+        <div class="item2">
+            <h1>输出数据</h1>
+            <p id="userlist"></p>
+            <button id="update" class="btn">刷新</button>
+            <!-- <button class="btn">登录</button> -->
+        </div>
+    </div>
+    <script>
+        const $usernameInput = document.getElementById('username');
+        const $passwordInput = document.getElementById('password');
+        const $registerBtn = document.getElementById('register');
+        const $msg = document.getElementById('msg');
+        const $userlist = document.getElementById('userlist');
+        const $updateBtn = document.getElementById('update');
+
+
+        $registerBtn.addEventListener('click', function () {
+            console.log();
+
+            fetch(`http://${location.host}/users`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: $usernameInput.value, password: $passwordInput.value })
+            })
+                .then((res) => {
+                    return res.text()
+                })
+                .then((text) => {
+                    if (text == 'Internal Server Error') {
+                        $msg.innerHTML = 'Failed';
+                    }else{
+                        $msg.innerHTML = 'Successful!';
+                    }
+                    
+                })
+        })
+        $updateBtn.addEventListener('click', function () {
+            fetch(`http://${location.host}/users`)
+                .then((res) => {
+                    return res.text()
+                })
+                .then((text) => {
+                    $userlist.innerHTML = text + '<br/>';
+                })
+        })
+    </script>
 </body>
+
 </html>
