@@ -2,15 +2,21 @@ const service = require('../service/user.service');
 
 // 处理函数的控制器controller
 class UserController {
-    async create(ctx, next) {
+    // 用户注册
+    async createDiner(ctx, next) {
         // 获取传过来的参数
-        const user = {name: "yvan1", password: '123456'};
+        const user = ctx.request.body;
 
         // 查询数据库
         const result = await service.create(user);
 
         // 返回数据
-        ctx.body = result;
+        ctx.response.body = result;
+    }
+
+    // 获取用户信息
+    async getDiner(ctx, next) {
+        ctx.response.body = "<h1>Hello World!</h1>"
     }
 }
 
